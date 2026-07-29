@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAS KATI - Toko Aksesoris Komputer (VEYLEKTRONIK)</title>
+    <style>
+        /* TATA LETAK UTAMA SESUAI FORMAT PDF: HEADER, MENU, LEFT, CONTENT, RIGHT, FOOTER */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #f1ebeb;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 1. HEADER (Warna Biru/Slate) */
+        header {
+            background: linear-gradient(135deg, #2b5876, #4e4376);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* TEKS BERJALAN (MARQUEE) */
+        .marquee-container {
+            background-color: #1e293b;
+            color: #f1f5f9;
+            padding: 8px 0;
+            font-size: 14px;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        /* 2. MENU / NAVIGASI (Warna Kuning seperti di Diagram Soal) */
+        nav {
+            background-color: #86efac;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li a {
+            display: block;
+            padding: 12px 20px;
+            color: #1e293b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background-color: #86efac;
+            color: #000;
+        }
+
+        /* CONTAINER TIGA KOLOM (LEFT | CONTENT | RIGHT) */
+        .main-container {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            max-width: 1400px;
+            margin: 15px auto;
+            padding: 0 10px;
+            gap: 15px;
+        }
+
+        /* 3 & 5. SIDEBAR LEFT & RIGHT (Warna Hijau seperti di Diagram Soal) */
+        .sidebar {
+            width: 220px;
+            background-color: #86efac;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .sidebar h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #14532d;
+            border-bottom: 2px solid #16a34a;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #166534;
+            font-size: 14px;
+            display: block;
+            padding: 6px 8px;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.6);
+            transition: all 0.2s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #ffffff;
+            color: #14532d;
+            font-weight: bold;
+            padding-left: 12px;
+        }
+
+        .promo-card {
+            background: #ffffff;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 15px;
+            text-align: center;
+            border: 1px dashed #16a34a;
+        }
+
+        /* 4. CONTENT AREA (Warna Biru Muda seperti di Diagram Soal) */
+        .content {
+            flex: 1;
+            background-color: #bfdbfe;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            min-width: 0;
+        }
+
+        .page-section {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 8px;
+        }
+
+        /* GRID KATALOG PRODUK (9 PRODUK MINIMAL) */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            background-color: #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-img-placeholder {
+            width: 100%;
+            height: 180px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-weight: bold;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .product-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .product-price {
+            color: #dc2626;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .btn-buy {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        .btn-buy:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* HALAMAN DETAIL PRODUK */
+        .detail-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .detail-img-box {
+            width: 320px;
+            height: 320px;
+            background-color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #475569;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .detail-info {
+            flex: 1;
+        }
+
+        .detail-info h2 {
+            font-size: 24px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        .detail-price {
+            font-size: 22px;
+            color: #dc2626;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .detail-desc, .detail-spec {
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        .detail-spec ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        /* FORM TRANSAKSI */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #334155;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn-submit {
+            background-color: #16a34a;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #15803d;
+        }
+
+        /* INVOICE / STRUK */
+        .invoice-box {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #0f172a;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .invoice-table th, .invoice-table td {
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .invoice-table th {
+            background-color: #f1f5f9;
+        }
+
+        /* KONTAK / BIODATA */
+        .profile-card {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #2563eb;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 150px;
+            background: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #475569;
+        }
+
+        /* 6. FOOTER (Sama seperti warna Header) */
+        footer {
+            background: linear-gradient(135deg, #2b5876, #4e4376);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: auto;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 900px) {
+            .main-container { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .detail-container { flex-direction: column; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>VEYLEKTRONIK</h1>
+        <p>Pusat Peralatan & Aksesoris Komputer Terlengkap dan Terpercaya</p>
+    </header>
+
+    <!-- TEKS BERJALAN (MARQUEE) -->
+    <div class="marquee-container">
+        <marquee behavior="scroll" direction="left">
+            🔥 PROMO KHUSUS HARI INI: Diskon hingga 30% untuk Pembelian Keyboard Mekanikal & Mouse Gaming! Gratis Ongkir Seluruh Indonesia! 🔥
+        </marquee>
+    </div>
+
+    <!-- MENU UTAMA -->
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showPage('produk')" id="nav-produk" class="active">Katalog Produk</a></li>
+            <li><a href="#" onclick="showPage('detail')" id="nav-detail">Detail Produk</a></li>
+            <li><a href="#" onclick="showPage('transaksi')" id="nav-transaksi">Input Transaksi</a></li>
+            <li><a href="#" onclick="showPage('invoice')" id="nav-invoice">Invoice / Struk</a></li>
+            <li><a href="#" onclick="showPage('kontak')" id="nav-kontak">Kontak Kami</a></li>
+            <li><a href="#" onclick="showPage('tentang')" id="nav-tentang">Tentang Perusahaan</a></li>
+        </ul>
+    </nav>
+
+    <!-- TATA LETAK UTAMA (LEFT - CONTENT - RIGHT) -->
+    <div class="main-container">
+        
+        <!-- SIDEBAR LEFT -->
+        <div class="sidebar">
+            <h3>Kategori Produk</h3>
+            <ul>
+                <li><a href="#" onclick="showPage('produk')">Keyboard & Mouse</a></li>
+                <li><a href="#" onclick="showPage('produk')">Audio & Headset</a></li>
+                <li><a href="#" onclick="showPage('produk')">Monitor & Display</a></li>
+                <li><a href="#" onclick="showPage('produk')">Aksesoris & Hub</a></li>
+                <li><a href="#" onclick="showPage('produk')">Gaming Chair</a></li>
+            </ul>
+
+            <div class="promo-card">
+                <a href="#" onclick="showPage('produk')" style="text-decoration:none;">
+                    <div style="background:#2563eb; color:white; padding: 20px 10px; border-radius:4px; font-weight:bold; margin-bottom:5px;">
+                        BANNER DISKON 50%
+                    </div>
+                </a>
+                <p style="font-size:12px; color:#166534; font-weight:bold;">Klik Banner untuk Promo Spesial!</p>
+            </div>
+        </div>
+
+        <!-- CONTENT AREA (ISI HALAMAN) -->
+        <div class="content">
+
+            <!-- 1. HALAMAN PRODUK (9 PRODUK) -->
+            <div id="page-produk" class="page-section active">
+                <h2 class="section-title">Katalog Produk Kami</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="foto3.jpg" weight="150px;" height="150px;" alt="Keyboard Mechanical" style="border-radius:6px; margin-bottom:10px;">
+                        <div class="product-title">Produk 1: Keyboard Mekanikal</div>
+                        <div class="product-price">Rp 800.000</div>
+                        <button class="btn-buy" onclick="selectProduct('Keyboard Mekanikal Pro (Blue Switch)', 800000)">Beli Sekarang</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="foto2.jpg" weight="150px;" height="150px;" alt="Mouse Gaming RGB" style="border-radius:6px; margin-bottom:10px;">
+                        <div class="product-title">Produk 2: Mouse Gaming</div>
+                        <div class="product-price">Rp 350.000</div>
+                        <button class="btn-buy" onclick="selectProduct('Mouse Gaming RGB 16000 DPI', 350000)">Beli Sekarang</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="foto4.jpg" weight="150px;" height="150px;" alt="Headset Wireless" style="border-radius:6px; margin-bottom:10px;">
+                        <div class="product-title">Produk 3: Headset Wireless</div>
+                        <div class="product-price">Rp 1.100.000</div>
+                        <button class="btn-buy" onclick="selectProduct('Headset Wireless 7.1 Surround', 1100000)">Beli Sekarang</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="foto5.jpg" weight="150px;" height="150px;" alt="Monitor 24 inch" style="border-radius:6px; margin-bottom:10px;">
+                        <div class="product-title">Produk 4: Monitor 24 inch</div>
+                        <div class="product-price">Rp 2.500.000</div>
+                        <button class="btn-buy" onclick="selectProduct('Monitor 24 inch IPS 144Hz', 2500000)">Beli Sekarang</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="foto6.jpg" weight="150px;" height="150px;" alt="Webcam 1080p" style="border-radius:6px; margin-bottom:10px;">
+                        <div class="product-title">Produk 5: Webcam 1080p</div>
+                        <div class="product-price">Rp 600.000</div>
+                        <button class="btn-buy" onclick="selectProduct('Webcam 1080p Full HD Autofocus', 600000)">Beli Sekarang</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="foto8.jpg" weight="150px;" height="150px;" alt="Mouse Pad XXL" style="border-radius:6px; margin-bottom:10px;">
+                        <div class="product-title">Produk 6: Mouse Pad XXL</div>
+                        <div class="product-price">Rp 150.000</div>
+                        <button class="btn-buy" onclick="selectProduct('Mouse Pad XXL Speed Edition', 150000)">Beli Sekarang</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="foto7.jpg" weight="150px;" height="150px;" alt="Laptop Stand" style="border-radius:6px; margin-bottom:10px;">
+                        <div class="product-title">Produk 7: Laptop Stand</div>
+                        <div class="product-price">Rp 250.000</div>
+                        <button class="btn-buy" onclick="selectProduct('Laptop Stand Aluminium Adjustable', 250000)">Beli Sekarang</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="foto6.webp" weight="150px;" height="150px;" alt="USB Hub" style="border-radius:6px; margin-bottom:10px;">
+                        <div class="product-title">Produk 8: USB Hub</div>
+                        <div class="product-price">Rp 128.000</div>
+                        <button class="btn-buy" onclick="selectProduct('USB Hub 3.0 4-Port SuperSpeed', 128000)">Beli Sekarang</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="OIP.webp" weight="150px;" height="150px;" alt="Kursi Gaming" style="border-radius:6px; margin-bottom:10px;">
+                        <div class="product-title">Produk 9: Kursi Gaming</div>
+                        <div class="product-price">Rp 3.000.000</div>
+                        <button class="btn-buy" onclick="selectProduct('Kursi Gaming Ergonomis Premium', 3000000)">Beli Sekarang</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. HALAMAN DETAIL PRODUK -->
+            <div id="page-detail" class="page-section">
+                <h2 class="section-title">Detail Produk</h2>
+                <div class="detail-container">
+                    <img src="foto3.jpg" weight="400px;" height="400px;" alt="Detail Produk" class="detail-img-box">
+                    <div class="detail-info">
+                        <h2 id="detail-name">Keyboard Mekanikal Pro (Blue Switch)</h2>
+                        <div class="detail-price" id="detail-price">Rp 800.000</div>
+                        
+                        <div class="detail-desc">
+                            <strong>Deskripsi Produk:</strong><br>
+                            Rasakan pengalaman mengetik terbaik dengan Keyboard Mekanikal Pro. Dirancang untuk gamer dan profesional, keyboard ini menggunakan Blue Switch yang 'clicky' dan responsif.<br><br>
+                            Bodi keyboard terbuat dari aluminium solid yang kokoh, dengan pencahayaan RGB yang bisa diatur per tombol.
+                        </div>
+
+                        <div class="detail-spec">
+                            <strong>Spesifikasi:</strong>
+                            <ul>
+                                <li>Tipe Switch: Outemu Blue Switch (Clicky)</li>
+                                <li>Konektivitas: USB-C (Kabel bisa dilepas)</li>
+                                <li>Bahan: Aluminium Plate + ABS Body</li>
+                                <li>Fitur: Full N-Key Rollover (Anti-Ghosting)</li>
+                                <li>Lampu: RGB Per-Key</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-bottom: 15px;">
+                            <label for="detail-qty"><strong>Jumlah:</strong> </label>
+                            <input type="number" id="detail-qty" value="1" min="1" style="width: 70px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
+                        </div>
+
+                        <button class="btn-submit" onclick="proceedToCheckout()" style="width: auto; padding: 10px 20px;">Lanjut ke Pembayaran</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. HALAMAN INPUT TRANSAKSI -->
+            <div id="page-transaksi" class="page-section">
+                <h2 class="section-title">Form Input Transaksi / Pemesanan</h2>
+                <form id="orderForm" onsubmit="handleTransaction(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="tx-nama" required placeholder="Masukkan nama lengkap">
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Telepon / WA</label>
+                            <input type="tel" id="tx-hp" required placeholder="08xxxxxxxxxx">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="tx-email" required placeholder="email@domain.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Pilihan Produk</label>
+                            <select id="tx-produk" required>
+                                <option value="Keyboard Mekanikal Pro (Blue Switch)|800000">Keyboard Mekanikal Pro - Rp 800.000</option>
+                                <option value="Mouse Gaming RGB 16000 DPI|350000">Mouse Gaming RGB - Rp 350.000</option>
+                                <option value="Headset Wireless 7.1 Surround|1100000">Headset Wireless - Rp 1.100.000</option>
+                                <option value="Monitor 24 inch IPS 144Hz|2500000">Monitor 24 inch - Rp 2.500.000</option>
+                                <option value="Webcam 1080p Full HD Autofocus|600000">Webcam 1080p - Rp 600.000</option>
+                                <option value="Mouse Pad XXL Speed Edition|150000">Mouse Pad XXL - Rp 150.000</option>
+                                <option value="Laptop Stand Aluminium Adjustable|250000">Laptop Stand - Rp 250.000</option>
+                                <option value="USB Hub 3.0 4-Port SuperSpeed|128000">USB Hub 3.0 - Rp 128.000</option>
+                                <option value="Kursi Gaming Ergonomis Premium|3000000">Kursi Gaming - Rp 3.000.000</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Jumlah (Pcs)</label>
+                            <input type="number" id="tx-qty" value="1" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Metode Pembayaran</label>
+                            <select id="tx-metode" required>
+                                <option value="Transfer Bank BCA">Transfer Bank BCA</option>
+                                <option value="Transfer Bank Mandiri">Transfer Bank Mandiri</option>
+                                <option value="E-Wallet (OVO/Gopay/Dana)">E-Wallet (OVO / Gopay / DANA)</option>
+                                <option value="Kartu Kredit">Kartu Kredit</option>
+                                <option value="COD (Bayar di Tempat)">COD (Bayar di Tempat)</option>
+                            </select>
+                        </div>
+                        <div class="form-group full">
+                            <label>Alamat Pengiriman Lengkap</label>
+                            <textarea id="tx-alamat" rows="3" required placeholder="Jalan, No. Rumah, RT/RW, Kecamatan, Kota, Kode Pos"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Proses Transaksi & Cetak Struk</button>
+                </form>
+            </div>
+
+            <!-- 4. HALAMAN INVOICE / STRUK -->
+            <div id="page-invoice" class="page-section">
+                <h2 class="section-title">Invoice / Struk Pembelian</h2>
+                <div class="invoice-box">
+                    <div class="invoice-header">
+                        <div>
+                            <h3 style="color:#1e3a8a;">TECHZONE STORE</h3>
+                            <p style="font-size:12px; color:#64748b;">Jl. Komputer No. 101, Bandung</p>
+                            <p style="font-size:12px; color:#64748b;">Email: info@techzone.com | WA: 0812-3456-7890</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <h4 style="color:#2563eb;">INVOICE OFFICIAL</h4>
+                            <p style="font-size:13px; font-weight:bold;" id="inv-no">No: INV/20250620/001</p>
+                            <p style="font-size:12px; color:#64748b;" id="inv-date">Tanggal: 20 Juni 2025</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px; font-size:14px;">
+                        <p><strong>Diterbitkan Untuk:</strong></p>
+                        <p id="inv-nama">Nama Pelanggan: -</p>
+                        <p id="inv-hp">No HP: -</p>
+                        <p id="inv-alamat">Alamat: -</p>
+                    </div>
+
+                    <table class="invoice-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Item Produk</th>
+                                <th>Harga Satuan</th>
+                                <th>Jumlah</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td id="inv-prod-name">Keyboard Mekanikal Pro (Blue Switch)</td>
+                                <td id="inv-prod-price">Rp 800.000</td>
+                                <td id="inv-prod-qty">1</td>
+                                <td id="inv-prod-subtotal">Rp 800.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:15px;">
+                        <div style="font-size:13px;">
+                            <p><strong>Metode Pembayaran:</strong> <span id="inv-metode">Transfer Bank BCA</span></p>
+                            <p><strong>Status:</strong> <span style="color:green; font-weight:bold;">Lunas / TERBAYAR</span></p>
+                        </div>
+                        <div style="text-align:right; font-size:16px;">
+                            <p><strong>Total Bayar:</strong> <span id="inv-total" style="color:#dc2626; font-weight:bold; font-size:20px;">Rp 800.000</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. HALAMAN KONTAK KAMI (BIODATA MAHASISWA) -->
+            <div id="page-kontak" class="page-section">
+                <h2 class="section-title">Kontak Kami & Biodata Pengembang</h2>
+                <div class="profile-card">
+                    <div class="profile-img">FOTO ANDA</div>
+                    <div class="profile-details">
+                        <p><strong>Nama Lengkap:</strong> Gema Aidul Fitra Oktora</p>
+                        <p><strong>NIM:</strong> 10525042</p>
+                        <p><strong>Kelas:</strong> IS-2</p>
+                        <p><strong>Mata Kuliah:</strong> Komputer Aplikasi Teknologi Informasi</p>
+                        <p><strong>Dosen:</strong> Syahrul Mauluddin, S.Kom, M.Kom</p>
+                        <p><strong>Email:</strong> gema.10525042@mahasiswa.ac.id</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. HALAMAN TENTANG PERUSAHAAN -->
+            <div id="page-tentang" class="page-section">
+                <h2 class="section-title">Tentang Perusahaan VEYLEKTRONIK</h2>
+                <div style="line-height:1.7; color:#334155;">
+                    <p style="margin-bottom:15px;">
+                        <strong>VEYLEKTRONIK</strong> adalah penyedia terkemuka hardware, perlengkapan gaming, dan aksoris komputer berkualitas tinggi di Indonesia.
+                    </p>
+                    <h3 style="color:#1e3a8a; margin-top:15px; margin-bottom:5px;">Visi & Misi</h3>
+                    <p><strong>Visi:</strong> Menjadi toko ritel teknologi terdepan dan terpercaya.</p>
+                    <p><strong>Misi:</strong> Menyediakan produk orisinal bergaransi resmi dengan layanan pelanggan terbaik.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SIDEBAR RIGHT -->
+        <div class="sidebar">
+            <h3>Layanan & Info</h3>
+            <ul>
+                <li><a href="#">🚚 Pengiriman Cepat</a></li>
+                <li><a href="#">🛡️ Garansi Resmi</a></li>
+                <li><a href="#">💳 Pembayaran Aman</a></li>
+                <li><a href="#">💬 Support 24/7</a></li>
+            </ul>
+
+            <div class="promo-card" style="border-color:#2563eb;">
+                <h4 style="font-size:13px; color:#1e3a8a; margin-bottom:5px;">Jam Operasional</h4>
+                <p style="font-size:12px; color:#475569;">Senin - Sabtu:<br>08.00 - 20.00 WIB</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 VEYLEKTRONIK - Tugas UAS KATI. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIK KONEKSI ANTAR HALAMAN & FORM -->
+    <script>
+        let currentProduct = { name: "Keyboard Mekanikal Pro (Blue Switch)", price: 800000 };
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('nav ul li a').forEach(l => l.classList.remove('active'));
+
+            const targetPage = document.getElementById('page-' + pageId);
+            if(targetPage) targetPage.classList.add('active');
+
+            const targetNav = document.getElementById('nav-' + pageId);
+            if(targetNav) targetNav.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectProduct(name, price) {
+            currentProduct = { name, price };
+            document.getElementById('detail-name').innerText = name;
+            document.getElementById('detail-price').innerText = 'Rp ' + price.toLocaleString('id-ID');
+            showPage('detail');
+        }
+
+        function proceedToCheckout() {
+            const qty = document.getElementById('detail-qty').value || 1;
+            const selectEl = document.getElementById('tx-produk');
+            for(let opt of selectEl.options) {
+                if(opt.value.startsWith(currentProduct.name)) {
+                    opt.selected = true;
+                    break;
+                }
+            }
+            document.getElementById('tx-qty').value = qty;
+            showPage('transaksi');
+        }
+
+        function handleTransaction(e) {
+            e.preventDefault();
+            const nama = document.getElementById('tx-nama').value;
+            const hp = document.getElementById('tx-hp').value;
+            const alamat = document.getElementById('tx-alamat').value;
+            const [prodName, priceStr] = document.getElementById('tx-produk').value.split('|');
+            const price = parseInt(priceStr);
+            const qty = parseInt(document.getElementById('tx-qty').value);
+            const metode = document.getElementById('tx-metode').value;
+            const total = price * qty;
+
+            document.getElementById('inv-no').innerText = 'No: INV/' + new Date().getFullYear() + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('inv-date').innerText = 'Tanggal: ' + new Date().toLocaleDateString('id-ID');
+            document.getElementById('inv-nama').innerText = 'Nama Pelanggan: ' + nama;
+            document.getElementById('inv-hp').innerText = 'No HP: ' + hp;
+            document.getElementById('inv-alamat').innerText = 'Alamat: ' + alamat;
+            document.getElementById('inv-prod-name').innerText = prodName;
+            document.getElementById('inv-prod-price').innerText = 'Rp ' + price.toLocaleString('id-ID');
+            document.getElementById('inv-prod-qty').innerText = qty;
+            document.getElementById('inv-prod-subtotal').innerText = 'Rp ' + total.toLocaleString('id-ID');
+            document.getElementById('inv-metode').innerText = metode;
+            document.getElementById('inv-total').innerText = 'Rp ' + total.toLocaleString('id-ID');
+
+            alert('Transaksi Berhasil! Struk / Invoice telah dibuat.');
+            showPage('invoice');
+        }
+    </script>
+</body>
+</html>
